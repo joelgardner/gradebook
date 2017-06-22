@@ -2,10 +2,10 @@
 import ids from '../util/idGenerator'
 
 export type Student = {
-  id        : string;
-  firstName : string;
-  lastName  : string;
-  grades    : Array<number>
+  id        : string,
+  firstName : string,
+  lastName  : string,
+  grades    : Map<string, number>
 }
 
 /**
