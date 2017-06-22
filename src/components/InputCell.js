@@ -1,19 +1,11 @@
 import React from 'react'
-import R from 'ramda'
+import { didChange, keyIsEnter } from '../util/inputHelpers'
 
-const Gradebook = ({ grade, changeGrade }) =>
+const InputCell = ({ value, valueChanged }) =>
   <input type="text"
-    defaultValue={grade}
-    onKeyDown={e => keyIsEnter(e) && didChange(e.target.value, grade) && changeGrade(e.target.value)}
-    onBlur={e => didChange(e.target.value, grade) && changeGrade(e.target.value)}
-  ></input>
+    defaultValue={value}
+    onKeyDown={e => keyIsEnter(e) && didChange(e.target.value, value) && valueChanged(e.target.value)}
+    onBlur={e => didChange(e.target.value, value) && valueChanged(e.target.value)}>
+  </input>
 
-function didChange(value, grade) {
-  return R.defaultTo('', value) !== R.defaultTo('', grade)
-}
-
-function keyIsEnter(e) {
-  return e.keyCode === 13
-}
-
-export default Gradebook
+export default InputCell

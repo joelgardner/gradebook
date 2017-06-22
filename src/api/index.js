@@ -4,23 +4,25 @@ import type { Student, Test, Gradebook } from '../types'
 import ids from '../util/idGenerator'
 
 // Since we're not using a server, we're generating IDs on the client.
-// The following variables are id generator functions.
-const studentIds = ids(getStudents().length)
-const testIds = ids(getTests().length)
+// The following variables are id generator functions.  We pass the
+// current max id + 1 so we don't have ID collisions.
+const studentIds = ids(getNextId(getStudents()))
+const testIds = ids(getNextId(getTests()))
+function getNextId(items = []) {
+  return R.isEmpty(items) ? 0 : R.apply(Math.max, R.map(R.prop('id'), items)) + 1
+}
 
 /**
   API function to add a student to the gradebook.  If we were using a real
   backend server, this functions contents would be replaced with a fetch call
   to POST /students.
-  @param {string} firstName - Student's first name
-  @param {string} lastName - Student's last name
+  @param {string} name - Student's name
 */
-export function addStudent(firstName : string, lastName : string) : Student {
+export function addStudent(name : string) : Student {
   const students : Array<Student> = getStudents()
   students.push({
     id: studentIds.next().value,
-    firstName,
-    lastName,
+    name,
     grades: {}
   })
   setStudents(students)
@@ -28,11 +30,41 @@ export function addStudent(firstName : string, lastName : string) : Student {
 }
 
 /**
+  API function to remove a student from the gradebook.  If we were using a real
+  backend server, this functions contents would be replaced with a fetch call
+  to DELETE /students.
+  @param {int} id - Student's id
+  @returns {Student} - Student that was deleted
+*/
+export function deleteStudent(id : int) : Student {
+  const students : Array<Student> = getStudents()
+  const i = R.findIndex(R.propEq('id', id), students)
+  setStudents(R.remove(i, 1, students))
+  return students[i]
+}
+
+/**
+  API function to edit a student's name.  If we were using a real
+  backend server, this functions contents would be replaced with a fetch call
+  to PUT /students/{id}.
+  @param {int} id - Student's id
+  @returns {Student} - Student that was deleted
+*/
+export function editStudent(id : int, name : string) : Student {
+  const students : Array<Student> = getStudents()
+  const i = R.findIndex(R.propEq('id', id), students)
+  students[i].name = name
+  setStudents(students)
+  return students[i]
+}
+
+
+/**
   API function to add a test to the gradebook.  If we were using a real
   backend server, this functions contents would be replaced with a fetch call
   to POST /tests.
   @param {string} name - Test title/name
-  @param {string} lastName - Test's date
+  @param {string} name - Test's date
 */
 export function addTest(name : string, date : string) : Test {
   const tests : Array<Test> = getTests()
@@ -47,8 +79,6 @@ export function addTest(name : string, date : string) : Test {
 
 /**
   API function to fetch gradebook information.
-  @param {string} firstName - Student's first name
-  @param {string} lastName - Student's last name
   @returns {Gradebook} Object representing the gradebook.
 */
 export function fetchGradebook() : Gradebook {

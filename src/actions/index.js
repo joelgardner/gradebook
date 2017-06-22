@@ -25,10 +25,51 @@ export const fetchGradebookCompleted = gradebook => ({
   Action to create a new student.  Triggered by the user.
 */
 export const ADD_STUDENT = 'ADD_STUDENT'
-export const addStudent = (firstName, lastName) => ({
+export const addStudent = name => ({
   type: ADD_STUDENT,
-  firstName,
-  lastName
+  name
+})
+
+/**
+  Action to delete a student.  Triggered by the user.
+*/
+export const DELETE_STUDENT = 'DELETE_STUDENT'
+export const deleteStudent = id => ({
+  type: DELETE_STUDENT,
+  id
+})
+
+/**
+  Action to signal the completed deletion of a student.
+  Triggered by Redux-Saga (see sagas.js).
+  @param {Student} student - The Student object that was removed.
+*/
+export const DELETE_STUDENT_COMPLETED = 'DELETE_STUDENT_COMPLETED'
+export const deleteStudentCompleted = student => ({
+  type: DELETE_STUDENT_COMPLETED,
+  student
+})
+
+
+/**
+  Action to edit a student's name.  Triggered by the user.
+*/
+export const EDIT_STUDENT = 'EDIT_STUDENT'
+export const editStudent = (id, name) => ({
+  type: EDIT_STUDENT,
+  id,
+  name
+})
+
+/**
+  Action to signal the completed edit of a student's name.
+  Triggered by Redux-Saga (see sagas.js).
+  @param {Student} student - The Student object that was edited.
+*/
+export const EDIT_STUDENT_COMPLETED = 'EDIT_STUDENT_COMPLETED'
+export const editStudentCompleted = student => ({
+  type: EDIT_STUDENT_COMPLETED,
+  student
 })
 
 /**

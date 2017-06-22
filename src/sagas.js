@@ -8,6 +8,13 @@ import {
   //FETCH_GRADEBOOK_FAILED,
   ADD_STUDENT,
   ADD_STUDENT_COMPLETED,
+
+  DELETE_STUDENT,
+  DELETE_STUDENT_COMPLETED,
+
+  EDIT_STUDENT,
+  EDIT_STUDENT_COMPLETED,
+
   //ADD_STUDENT_FAILED,
   ADD_TEST,
   ADD_TEST_COMPLETED,
@@ -22,16 +29,48 @@ import {
   Called when user clicks the "Add Student" button.  Calls the API's addStudent
   method (which for now is just using localStorage), and once completed, yields
   an ADD_STUDENT_COMPLETED action with the new student.
-  @param {{ firstName : string, lastName : string }} action - Object containing
+  @param {{ name : string }} action - Object containing
   first and last name of the user to add to the gradebook.
 */
 export function* addStudent(action) {
-  const student = yield call(api.addStudent, action.firstName, action.lastName)
+  const student = yield call(api.addStudent, action.name)
   yield put({
     type: ADD_STUDENT_COMPLETED,
     student
   })
 }
+
+/**
+  Called when user clicks the "Delete Student" button.  Calls the API's deleteStudent
+  method (which for now is just using localStorage), and once completed, yields
+  an DELETE_STUDENT_COMPLETED action with the new student.
+  @param {{ id : int }} action - Object containing
+  first and last name of the user to add to the gradebook.
+*/
+export function* deleteStudent(action) {
+  const student = yield call(api.deleteStudent, action.id)
+  yield put({
+    type: DELETE_STUDENT_COMPLETED,
+    student
+  })
+}
+
+/**
+  Called when user edits a student's name.  Calls the API's editStudent
+  method (which for now is just using localStorage), and once completed, yields
+  an EDIT_STUDENT_COMPLETED action with the changed student.
+  @param {{ id : int, name : String }} action - Object containing
+  first and last name of the user to add to the gradebook.
+*/
+export function* editStudent(action) {
+  const student = yield call(api.editStudent, action.id, action.name)
+  yield put({
+    type: EDIT_STUDENT_COMPLETED,
+    student
+  })
+}
+
+
 
 
 /**
@@ -84,6 +123,8 @@ export function* changeGrade(action) {
 */
 export default function* rootSaga() {
   yield takeEvery(ADD_STUDENT, addStudent)
+  yield takeEvery(DELETE_STUDENT, deleteStudent)
+  yield takeEvery(EDIT_STUDENT, editStudent)
   yield takeEvery(ADD_TEST, addTest)
   yield takeEvery(FETCH_GRADEBOOK, fetchGradebook)
   yield takeEvery(CHANGE_GRADE, changeGrade)

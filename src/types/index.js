@@ -7,8 +7,7 @@ export type Gradebook = {
 
 export type Student = {
   id        : string,
-  firstName : string,
-  lastName  : string,
+  name      : string,
   grades    : Map<string, number>
 }
 
