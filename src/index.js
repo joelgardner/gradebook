@@ -22,5 +22,5 @@ render(
 );
 registerServiceWorker();
 
-// on page load, request the first two batches of products
+// on page load, request the gradebook
 store.dispatch(fetchGradebook());

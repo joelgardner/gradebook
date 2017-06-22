@@ -11,6 +11,7 @@
     "redux-saga": "^0.15.3"
   },
   "devDependencies": {
+    "babel-jest": "^20.0.3",
     "flow-bin": "^0.48.0",
     "react-scripts": "1.0.7"
   },
