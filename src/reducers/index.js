@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import R from 'ramda'
-import { List, Map } from 'immutable'
+//import { List, Map } from 'immutable'
 import {
   ADD_STUDENT_COMPLETED,
   DELETE_STUDENT_COMPLETED,
@@ -21,30 +21,27 @@ import {
   the newly created or deleted student.
 */
 function students(state = [], action) {
+    let i
     switch (action.type) {
       case ADD_STUDENT_COMPLETED:
-        return state.push(Object.assign(action.student, { grades: Map({}) }))
+        return [...state, Object.assign(action.student, { grades: {} })]
       case DELETE_STUDENT_COMPLETED:
-        const i = state.findIndex(R.propEq('id', action.student.id))
-        return state.delete(i)
+        i = R.findIndex(R.propEq('id', action.student.id), state)
+        state.splice(i, 1)
+        return [...state]
       case EDIT_STUDENT_COMPLETED:
-        return state.withMutations(students => {
-          const student = R.find(R.propEq('id', action.student.id), students)
-          student.name = action.name
-        })
+        i = R.findIndex(R.propEq('id', action.student.id), state)
+        state[i].name = action.student.name
+        return [...state];
       case FETCH_GRADEBOOK_COMPLETED:
-        action.gradebook.students.forEach(s => s.grades = Map(s.grades))
-        return List(action.gradebook.students)
+        return action.gradebook.students
       case CHANGE_GRADE_COMPLETED:
-        return state.withMutations(students => {
-          // find the student via the action's studentId and
-          // update the grade of the student's test via the action's testId
-          const student = R.find(R.propEq('id', action.studentId), students)
-          student.grades.set(action.testId, action.grade)
-        })
+        i = R.findIndex(R.propEq('id', action.studentId), state)
+        state[i].grades[action.testId] = action.grade
+        return [...state]
       default:
     }
-    return List(state);
+    return state;
 }
 
 
@@ -58,12 +55,12 @@ function students(state = [], action) {
 function tests(state = [], action) {
     switch (action.type) {
       case ADD_TEST_COMPLETED:
-        return state.push(action.test)
+        return [...state, action.test]
       case FETCH_GRADEBOOK_COMPLETED:
-        return List(action.gradebook.tests)
+        return action.gradebook.tests
       default:
     }
-    return List(state);
+    return state;
 }
 
 export default combineReducers({
