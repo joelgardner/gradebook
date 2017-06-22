@@ -62,3 +62,32 @@ export const addTestCompleted = test => ({
   type: ADD_TEST_COMPLETED,
   test
 })
+
+
+/**
+  Action to signal that the user has entered/changed the grade for a
+  student's test.
+  @param {int} studentId - The ID of the student whose grade was entered.
+  @param {int} testId - The ID of the test which was changed.
+  @param {int} grade - The grade the student made on the test.
+*/
+export const CHANGE_GRADE = 'CHANGE_GRADE'
+export const changeGrade = (studentId, testId, grade) => ({
+  type: CHANGE_GRADE,
+  studentId,
+  testId,
+  grade
+})
+
+/**
+  Action to signal the completed grade-change of a student's test.
+  Triggered by Redux-Saga (see sagas.js).
+  @param {int} studentId - The ID of the student whose grade was entered.
+  @param {int} testId - The ID of the test which was changed.
+  @param {int} grade - The grade the student made on the test.
+*/
+export const CHANGE_GRADE_COMPLETED = 'CHANGE_GRADE_COMPLETED'
+export const gradeChangeCompleted = (studentId, testId, grade) => ({
+  type: CHANGE_GRADE_COMPLETED,
+  test
+})

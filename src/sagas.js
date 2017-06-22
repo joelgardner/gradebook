@@ -10,7 +10,11 @@ import {
   ADD_STUDENT_COMPLETED,
   //ADD_STUDENT_FAILED,
   ADD_TEST,
-  ADD_TEST_COMPLETED
+  ADD_TEST_COMPLETED,
+
+  CHANGE_GRADE,
+  CHANGE_GRADE_COMPLETED
+  //CHANGE_GRADE_FAILED
 } from './actions'
 
 
@@ -58,6 +62,23 @@ export function* fetchGradebook(action) {
 }
 
 /**
+  Called when user enters a new grade into a cell in the gradebook. Calls the
+  API's changeGrade method (which for now is just using localStorage), and once
+  completed, yields an CHANGE_GRADE_COMPLETED action with the new test.
+  @param {{ studentId : int, testId : int, grade : int }} action - Object
+  containing test and date of the test to add to the gradebook.
+*/
+export function* changeGrade(action) {
+  yield call(api.changeGrade, action.studentId, action.testId, action.grade)
+  yield put({
+    type: CHANGE_GRADE_COMPLETED,
+    studentId: action.studentId,
+    testId: action.testId,
+    grade: action.grade
+  })
+}
+
+/**
   The Root Saga.  Listens for actions, and calls the corresponding methods --
   see above.
 */
@@ -65,4 +86,5 @@ export default function* rootSaga() {
   yield takeEvery(ADD_STUDENT, addStudent)
   yield takeEvery(ADD_TEST, addTest)
   yield takeEvery(FETCH_GRADEBOOK, fetchGradebook)
+  yield takeEvery(CHANGE_GRADE, changeGrade)
 }

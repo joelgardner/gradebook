@@ -58,6 +58,21 @@ export function fetchGradebook() : Gradebook {
   }
 }
 
+/**
+  API function to add a test to the gradebook.  If we were using a real
+  backend server, this functions contents would be replaced with a fetch call
+  to POST /tests/1.
+  @param {int} studentId - Student's ID
+  @param {int} testId - Test's ID
+  @param {int} grade - Student's grade on the test
+  @returns {void}
+*/
+export function changeGrade(studentId : int, testId : int, grade : int) : void {
+  const students : Array<Student> = getStudents()
+  const student = R.find(R.propEq('id', studentId), students)
+  student.grades[testId] = grade
+  setStudents(students)
+}
 
 /**
   Function to retrieve student list from `localStorage`.

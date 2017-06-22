@@ -1,6 +1,8 @@
 import React from 'react'
+import InputCell from './InputCell'
+import R from 'ramda'
 
-const Gradebook = ({ students, tests, addStudent, addTest }) =>
+const Gradebook = ({ students, tests, addStudent, addTest, changeGrade }) =>
   <div>
     <div>Gradebook</div>
     <button onClick={() => addStudent("Bill", new Date().getTime().toString())}>Add Student</button>
@@ -26,7 +28,7 @@ const Gradebook = ({ students, tests, addStudent, addTest }) =>
             </th>
             {tests.map(t =>
               <td key={t.id}>
-                <input type="text" defaultValue={s.grades[t.id]}></input>
+                <InputCell grade={s.grades.get(t.id.toString())} changeGrade={grade => changeGrade(s.id, t.id, R.defaultTo(undefined, grade))} />
               </td>
             )}
           </tr>

@@ -1,15 +1,16 @@
 import { connect } from 'react-redux'
 import Gradebook from '../components/Gradebook'
-import { addStudent, addTest } from '../actions'
+import { addStudent, addTest, changeGrade } from '../actions'
 
-const mapStateToProps = state => console.log(state) || ({
+const mapStateToProps = state => ({
   students: state.students,
   tests: state.tests
 })
 
 const mapDispatchToProps = {
   addStudent,
-  addTest
+  addTest,
+  changeGrade
 }
 
 const GradebookContainer = connect(
