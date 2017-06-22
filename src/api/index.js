@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda'
-import type { Student } from '../types/student'
+import type { Student, Test, Gradebook } from '../types'
 import ids from '../util/idGenerator'
 
 // Since we're not using a server, we're generating IDs on the client.

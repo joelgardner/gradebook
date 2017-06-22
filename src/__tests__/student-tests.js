@@ -1,8 +1,8 @@
-import api from '../api'
-import { StudentCtor } from '../types/student'
+import id from '../util/idGenerator'
 
 test('student id generation should work', () => {
-  expect(new StudentCtor("Hank", "Hill").id).toBe(0);
-  expect(new StudentCtor("Peggy", "Hill").id).toBe(1);
-  expect(new StudentCtor("Bobby", "Hill").id).toBe(2);
+  const idGen = id()
+  expect(idGen.next().value).toBe(0);
+  expect(idGen.next().value).toBe(1);
+  expect(idGen.next().value).toBe(2);
 });
