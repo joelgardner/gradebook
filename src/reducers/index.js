@@ -84,7 +84,7 @@ function tests(state = [], action) {
 function ui(state = { activeTestId: 0 }, action) {
   switch(action.type) {
     case FETCH_GRADEBOOK_COMPLETED:
-      return { activeTestId: action.gradebook.tests[0].id }
+      return { activeTestId: action.gradebook.tests.length ? action.gradebook.tests[0].id : 0}
     case CHANGE_ACTIVE_TEST:
       return { activeTestId: action.testId }
     default:

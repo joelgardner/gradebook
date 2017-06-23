@@ -5,7 +5,7 @@ class InputCell extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: props.value
+      value: props.value || ''
     }
   }
 
@@ -14,12 +14,24 @@ class InputCell extends Component {
       <input type="text"
         tabIndex={this.props.tabIndex}
         value={this.state.value}
-        onFocus={e => { this.props.onFocus(); e.target.select() }}
+        onFocus={e => this.handleFocus(e)}
         onChange={e => this.validate(e.target.value)}
         onKeyDown={e => keyIsEnter(e) && e.target.blur()}
         onBlur={e => didChange(e.target.value, this.props.value) && this.props.valueChanged(e.target.value)}>
       </input>
     )
+  }
+
+  handleFocus(e) {
+    // if an onFocus handler was passed, call it
+    if (this.props.onFocus) {
+      this.props.onFocus()
+    }
+
+    // if this is a numeric cell, highlight the contents for easy updating
+    if (!this.props.allowStrings) {
+      e.target.select()
+    }
   }
 
   validate(value) {

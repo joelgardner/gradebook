@@ -36,7 +36,7 @@ const Gradebook = ({
             <td>
               <button onClick={() => deleteStudent(s.id)} tabIndex="-1">delete</button>
             </td>
-            <th>
+            <th style={s.grades[activeTestId] < 65 ? { backgroundColor:'#f00' } : null}>
               <InputCell value={s.name} allowStrings={true} valueChanged={name => editStudent(s.id, name)} tabIndex="-1" />
             </th>
             {tests.map((t, j) =>
