@@ -1,6 +1,7 @@
 import React from 'react'
 import InputCell from './InputCell'
 import R from 'ramda'
+import './Gradebook.css'
 
 const Gradebook = ({
     students,
@@ -16,7 +17,7 @@ const Gradebook = ({
   <div>
     <div>Gradebook</div>
     <button onClick={() => addStudent(`New Student`)}>Add Student</button>
-    <button onClick={() => addTest("Test", new Date().getTime().toString())}>Add Test</button>
+    <button onClick={() => addTest("Test", new Date().getTime())}>Add Test</button>
     <table>
       <thead>
         <tr>
@@ -24,7 +25,7 @@ const Gradebook = ({
             {/* empty header */}
           </th>
           {tests.map(t =>
-            <th onClick={e => changeActiveTest(t.id)} key={t.id} style={activeTestId === t.id ? { backgroundColor:'#0f0' } : null}>
+            <th onClick={e => changeActiveTest(t.id)} key={t.id} className={activeTestId === t.id ? 'active-test' : null}>
               {t.name}
             </th>
           )}
@@ -36,11 +37,11 @@ const Gradebook = ({
             <td>
               <button onClick={() => deleteStudent(s.id)} tabIndex="-1">delete</button>
             </td>
-            <th style={s.grades[activeTestId] < 65 ? { backgroundColor:'#f00' } : null}>
+            <th className={s.grades[activeTestId] < 65 ? 'failing' : null}>
               <InputCell value={s.name} allowStrings={true} valueChanged={name => editStudent(s.id, name)} tabIndex="-1" />
             </th>
             {tests.map((t, j) =>
-              <td key={t.id} style={activeTestId === t.id ? { backgroundColor:'#0f0' } : null} >
+              <td key={t.id} className={activeTestId === t.id ? 'active-test' : null} >
                 <InputCell
                   value={s.grades[t.id]}
                   tabIndex={(j * students.length) + i + 1}

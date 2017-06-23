@@ -1,0 +1,7 @@
+.failing {
+  background-color: #f00;
+}
+
+.active-test {
+  background-color: #0f0;
+}
