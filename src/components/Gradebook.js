@@ -29,17 +29,17 @@ const Gradebook = ({
         </tr>
       </thead>
       <tbody>
-        {students.map(s =>
+        {students.map((s, i) =>
           <tr key={s.id}>
             <td>
-              <button onClick={() => deleteStudent(s.id)}>delete</button>
+              <button onClick={() => deleteStudent(s.id)} tabIndex="-1">delete</button>
             </td>
             <th>
-              <InputCell value={s.name} allowString={true} valueChanged={name => editStudent(s.id, name)} />
+              <InputCell value={s.name} allowStrings={true} valueChanged={name => editStudent(s.id, name)} tabIndex="-1" />
             </th>
-            {tests.map(t =>
+            {tests.map((t, j) =>
               <td key={t.id}>
-                <InputCell value={s.grades[t.id]} valueChanged={grade => changeGrade(s.id, t.id, R.defaultTo(undefined, grade))} />
+                <InputCell value={s.grades[t.id]} tabIndex={(j * students.length) + i + 1} valueChanged={grade => changeGrade(s.id, t.id, R.defaultTo(undefined, grade))} />
               </td>
             )}
           </tr>

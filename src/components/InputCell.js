@@ -1,57 +1,33 @@
-//import React from 'react'
-import { didChange, keyIsEnter } from '../util/inputHelpers'
-//
-// const InputCell = ({ value, valueChanged, allowStrings }) =>
-//   <input type="text"
-//     defaultValue={value}
-//     onKeyDown={e => keyIsEnter(e) && didChange(e.target.value, value) && valueChanged(e.target.value)}
-//     onBlur={e => didChange(e.target.value, value) && valueChanged(e.target.value)}>
-//   </input>
-//
-// export default InputCell
-//
-
-
-
-
-
 import React, { Component } from 'react';
+import { didChange, keyIsEnter } from '../util/inputHelpers'
 
 class InputCell extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      valid: true
+      value: props.value
     }
   }
 
   render() {
     return (
       <input type="text"
-        defaultValue={this.props.value}
-        style={this.state.valid ? null : {backgroundColor:'#f00' }}
-        onKeyDown={e =>
-          keyIsEnter(e) &&
-          this.isValid(this.props.allowStrings, e.target.value) &&
-          didChange(e.target.value, this.props.value) &&
-          this.props.valueChanged(e.target.value)
-        }
+        tabIndex={this.props.tabIndex}
+        value={this.state.value}
+        onFocus={e => e.target.select()}
+        onChange={e => this.validate(e.target.value)}
+        onKeyDown={e => keyIsEnter(e) && e.target.blur()}
         onBlur={e => didChange(e.target.value, this.props.value) && this.props.valueChanged(e.target.value)}>
       </input>
-    );
+    )
   }
 
-  isValid(allowStrings, value) {
-    if (allowStrings) {
-      this.setState({ valid: true })
-      return true
+  validate(value) {
+    // (a) cells containing student names can have any arbitrary string
+    // (b) cells containing grades must have a non-NaN value
+    if (this.props.allowStrings || !isNaN(value)) {
+      this.setState({ value })
     }
-
-    if (Number(parseFloat(value)) != value) {
-      this.setState({ valid: false })
-      return false
-    }
-    return true
   }
 }
 
