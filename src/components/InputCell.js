@@ -14,7 +14,7 @@ class InputCell extends Component {
       <input type="text"
         tabIndex={this.props.tabIndex}
         value={this.state.value}
-        onFocus={e => this.props.onFocus() && e.target.select()}
+        onFocus={e => { this.props.onFocus(); e.target.select() }}
         onChange={e => this.validate(e.target.value)}
         onKeyDown={e => keyIsEnter(e) && e.target.blur()}
         onBlur={e => didChange(e.target.value, this.props.value) && this.props.valueChanged(e.target.value)}>

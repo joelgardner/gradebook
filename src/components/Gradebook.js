@@ -45,7 +45,7 @@ const Gradebook = ({
                   value={s.grades[t.id]}
                   tabIndex={(j * students.length) + i + 1}
                   valueChanged={grade => changeGrade(s.id, t.id, R.defaultTo(undefined, grade))}
-                  onFocus={e => activeTestId === t.id ? null : changeActiveTest(t.id)}
+                  onFocus={e => { if (activeTestId !== t.id) changeActiveTest(t.id) }}
                 />
               </td>
             )}
