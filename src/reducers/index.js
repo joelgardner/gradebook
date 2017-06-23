@@ -49,15 +49,32 @@ function students(state = [], action) {
   Reducer functions that maintains the tests.  We typically mutate the
   list of tests only upon a creation or deletion of a test.
   @param {Array<Test>} state - the application's list of tests.
-  @param {{ type : string, test: Test }} action - the message containing
-  the newly created or deleted test.
+  @param {{ type : string, ... mixed }} action - the message containing
+  the info about the test action.
 */
 function tests(state = [], action) {
     switch (action.type) {
       case ADD_TEST_COMPLETED:
         return [...state, action.test]
       case FETCH_GRADEBOOK_COMPLETED:
-        return action.gradebook.tests
+        // set state to the fetched tests, and fallthrough to
+        // the next case so we set the test statistics
+        state = action.gradebook.tests
+        // eslint-disable-next-line
+      case CHANGE_GRADE_COMPLETED:
+        // iterate through each test, and set the min|max|average.
+        // the action contains the entire gradebook, in order for us
+        // to do these calculations
+        state.forEach(test => {
+          const isNotNaN = R.compose(R.not, Number.isNaN)
+          const parseFloatById = R.compose(parseFloat, R.prop(test.id))
+          const grades = action.gradebook.students.map(s => s.grades)
+          const testGrades = R.filter(isNotNaN, R.map(parseFloatById, grades));
+          test.min = testGrades.length ? R.reduce(R.min, Number.MAX_SAFE_INTEGER, testGrades).toFixed(2) : ''
+          test.max = testGrades.length ? R.reduce(R.max, Number.MIN_SAFE_INTEGER, testGrades).toFixed(2) : ''
+          test.avg = testGrades.length ? (R.sum(testGrades) / testGrades.length).toFixed(2) : ''
+        })
+        return state
       default:
     }
     return state;

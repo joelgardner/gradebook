@@ -97,11 +97,15 @@ export function fetchGradebook() : Gradebook {
   @param {int} grade - Student's grade on the test
   @returns {void}
 */
-export function changeGrade(studentId : int, testId : int, grade : int) : void {
+export function changeGrade(studentId : int, testId : int, grade : int) : Gradebook {
   const students : Array<Student> = getStudents()
   const student = R.find(R.propEq('id', studentId), students)
   student.grades[testId] = grade
   setStudents(students)
+  return {
+    students,
+    gets: getTests()
+  }
 }
 
 /**

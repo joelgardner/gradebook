@@ -130,5 +130,7 @@ export const changeGrade = (studentId, testId, grade) => ({
 export const CHANGE_GRADE_COMPLETED = 'CHANGE_GRADE_COMPLETED'
 export const gradeChangeCompleted = (studentId, testId, grade) => ({
   type: CHANGE_GRADE_COMPLETED,
-  test
+  studentId,
+  testId,
+  grade
 })

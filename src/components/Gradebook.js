@@ -35,7 +35,7 @@ const Gradebook = ({
               <button onClick={() => deleteStudent(s.id)}>delete</button>
             </td>
             <th>
-              <InputCell value={s.name} valueChanged={name => editStudent(s.id, name)} />
+              <InputCell value={s.name} allowString={true} valueChanged={name => editStudent(s.id, name)} />
             </th>
             {tests.map(t =>
               <td key={t.id}>
@@ -46,28 +46,27 @@ const Gradebook = ({
         )}
         <tr className="min">
           <td colSpan="2">Min</td>
-          {tests.map(t => {
-            const grades = students.map(s => s.grades)
-            const testGrades = R.map(R.compose(parseInt, R.prop(t.id)), grades);
-            return <td key={t.id}>{R.reduce(R.min, 100, testGrades)}</td>
-          })}
+          {tests.map(t =>
+            <td key={t.id}>
+              {t.min}
+            </td>
+          )}
         </tr>
         <tr className="max">
           <td colSpan="2">Max</td>
-          {tests.map(t => {
-            const grades = students.map(s => s.grades)
-            const testGrades = R.map(R.compose(parseInt, R.prop(t.id)), grades);
-            return <td key={t.id}>{R.reduce(R.max, 0, testGrades)}</td>
-          })}
+          {tests.map(t =>
+            <td key={t.id}>
+              {t.max}
+            </td>
+          )}
         </tr>
         <tr className="avg">
           <td colSpan="2">Average</td>
-          {tests.map(t => {
-            const grades = students.map(s => s.grades)
-            const testGrades = R.map(R.compose(parseInt, R.prop(t.id)), grades);
-            const nonNullGrades = R.filter(Number.isInteger, testGrades)
-            return <td key={t.id}>{Math.round(R.sum(nonNullGrades) / nonNullGrades.length)}</td>
-          })}
+          {tests.map(t =>
+            <td key={t.id}>
+              {t.avg}
+            </td>
+          )}
         </tr>
       </tbody>
     </table>

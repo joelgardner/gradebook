@@ -108,12 +108,13 @@ export function* fetchGradebook(action) {
   containing test and date of the test to add to the gradebook.
 */
 export function* changeGrade(action) {
-  yield call(api.changeGrade, action.studentId, action.testId, action.grade)
+  const gradebook = yield call(api.changeGrade, action.studentId, action.testId, action.grade)
   yield put({
     type: CHANGE_GRADE_COMPLETED,
     studentId: action.studentId,
     testId: action.testId,
-    grade: action.grade
+    grade: action.grade,
+    gradebook
   })
 }
 
