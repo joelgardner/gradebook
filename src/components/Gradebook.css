@@ -3,8 +3,12 @@ a.button.add-button {
   margin: 6px;
 }
 
-th.name {
+td.name {
   width: 200px;
+}
+
+td.delete-cell {
+  width: 60px;
 }
 
 .failing input {
@@ -13,5 +17,5 @@ th.name {
 }
 
 .active-test {
-  background-color: #0f0;
+  background-color: #ccfdcc;
 }

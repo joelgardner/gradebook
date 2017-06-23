@@ -25,7 +25,7 @@ const Gradebook = ({
             {/* empty header */}
           </th>
           {tests.map(t =>
-            <th onClick={e => changeActiveTest(t.id)} key={t.id} className={activeTestId === t.id ? 'active-test' : null}>
+            <th onClick={e => changeActiveTest(t.id)} key={t.id} className={activeTestId === t.id ? 'active-test' : ''}>
               {t.name}
             </th>
           )}
@@ -34,14 +34,14 @@ const Gradebook = ({
       <tbody>
         {students.map((s, i) =>
           <tr key={s.id}>
-            <td>
+            <td className="delete-cell">
               <a className="button is-small" onClick={() => deleteStudent(s.id)} tabIndex="-1">delete</a>
             </td>
-            <th className={`name ${s.grades[activeTestId] < 65 ? 'failing' : null}`}>
+            <td className={`name ${s.grades[activeTestId] < 65 ? 'failing' : ''}`}>
               <InputCell value={s.name} allowStrings={true} valueChanged={name => editStudent(s.id, name)} tabIndex="-1" />
-            </th>
+            </td>
             {tests.map((t, j) =>
-              <td key={t.id} className={`grade ${activeTestId === t.id ? 'active-test' : null}`} >
+              <td key={t.id} className={`grade ${activeTestId === t.id ? 'active-test' : ''}`} >
                 <InputCell
                   value={s.grades[t.id]}
                   tabIndex={(j * students.length) + i + 1}
