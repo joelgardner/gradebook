@@ -106,6 +106,17 @@ export const addTestCompleted = test => ({
 
 
 /**
+  Action to set a test to active.  Triggered by the user.
+  Results in the test column being highlighted, and the student
+  with the minimum grade for this test is highlighted red.
+*/
+export const CHANGE_ACTIVE_TEST = 'CHANGE_ACTIVE_TEST'
+export const changeActiveTest = testId => ({
+  type: CHANGE_ACTIVE_TEST,
+  testId
+})
+
+/**
   Action to signal that the user has entered/changed the grade for a
   student's test.
   @param {int} studentId - The ID of the student whose grade was entered.

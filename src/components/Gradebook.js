@@ -9,7 +9,9 @@ const Gradebook = ({
     deleteStudent,
     editStudent,
     addTest,
-    changeGrade
+    changeGrade,
+    activeTestId,
+    changeActiveTest
   }) =>
   <div>
     <div>Gradebook</div>
@@ -22,7 +24,7 @@ const Gradebook = ({
             {/* empty header */}
           </th>
           {tests.map(t =>
-            <th key={t.id}>
+            <th onClick={e => changeActiveTest(t.id)} key={t.id} style={activeTestId === t.id ? { backgroundColor:'#0f0' } : null}>
               {t.name}
             </th>
           )}
@@ -38,8 +40,13 @@ const Gradebook = ({
               <InputCell value={s.name} allowStrings={true} valueChanged={name => editStudent(s.id, name)} tabIndex="-1" />
             </th>
             {tests.map((t, j) =>
-              <td key={t.id}>
-                <InputCell value={s.grades[t.id]} tabIndex={(j * students.length) + i + 1} valueChanged={grade => changeGrade(s.id, t.id, R.defaultTo(undefined, grade))} />
+              <td key={t.id} style={activeTestId === t.id ? { backgroundColor:'#0f0' } : null} >
+                <InputCell
+                  value={s.grades[t.id]}
+                  tabIndex={(j * students.length) + i + 1}
+                  valueChanged={grade => changeGrade(s.id, t.id, R.defaultTo(undefined, grade))}
+                  onFocus={e => activeTestId === t.id ? null : changeActiveTest(t.id)}
+                />
               </td>
             )}
           </tr>

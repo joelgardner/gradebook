@@ -5,12 +5,14 @@ import {
   deleteStudent,
   editStudent,
   addTest,
-  changeGrade
+  changeGrade,
+  changeActiveTest
 } from '../actions'
 
 const mapStateToProps = state => ({
   students: state.students,
-  tests: state.tests
+  tests: state.tests,
+  activeTestId: state.ui.activeTestId
 })
 
 const mapDispatchToProps = {
@@ -18,7 +20,8 @@ const mapDispatchToProps = {
   deleteStudent,
   editStudent,
   addTest,
-  changeGrade
+  changeGrade,
+  changeActiveTest
 }
 
 const GradebookContainer = connect(
