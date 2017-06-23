@@ -21,7 +21,7 @@ import {
   @param {{ type : string, student: Student }} action - the message containing
   the newly created or deleted student.
 */
-function students(state = [], action) {
+export function students(state = [], action) {
   let i
   switch (action.type) {
     case ADD_STUDENT_COMPLETED:
@@ -53,7 +53,7 @@ function students(state = [], action) {
   @param {{ type : string, ... mixed }} action - the message containing
   the info about the test action.
 */
-function tests(state = [], action) {
+export function tests(state = [], action) {
   switch (action.type) {
     case ADD_TEST_COMPLETED:
       return [...state, action.test]

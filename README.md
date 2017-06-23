@@ -36,4 +36,4 @@ Stuff that I would do if this was a real project / I had more time:
 - Add ability to delete a test.
 - Add "frozen" row and column headers so that scrolling would always have the headers displayed.
 - Add more comprehensive typing information (via Flow)
-- Write more tests!  In `__tests__` there is a single, lonely test.
+- Write more tests!  In `__tests__` there is a single, lonely test in `student-tests.js` and a few reducer tests in `reducer-tests.js`.
