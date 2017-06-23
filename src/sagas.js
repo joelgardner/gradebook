@@ -48,10 +48,11 @@ export function* addStudent(action) {
   first and last name of the user to add to the gradebook.
 */
 export function* deleteStudent(action) {
-  const student = yield call(api.deleteStudent, action.id)
+  const result = yield call(api.deleteStudent, action.id)
   yield put({
     type: DELETE_STUDENT_COMPLETED,
-    student
+    student: result.student,
+    gradebook: result.gradebook
   })
 }
 

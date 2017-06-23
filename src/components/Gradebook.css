@@ -1,5 +1,15 @@
-.failing {
-  background-color: #f00;
+a.button.add-button {
+  width: 100px;
+  margin: 6px;
+}
+
+th.name {
+  width: 200px;
+}
+
+.failing input {
+  background-color: #da002c;
+  color: #fff;
 }
 
 .active-test {

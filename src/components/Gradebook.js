@@ -16,9 +16,9 @@ const Gradebook = ({
   }) =>
   <div>
     <div>Gradebook</div>
-    <button onClick={() => addStudent(`New Student`)}>Add Student</button>
-    <button onClick={() => addTest("Test", new Date().getTime())}>Add Test</button>
-    <table>
+    <a className="button is-primary is-small add-button" onClick={() => addStudent(`New Student`)}>Add Student</a>
+    <a className="button is-primary is-small add-button" onClick={() => addTest("Test", new Date().getTime())}>Add Test</a>
+    <table className="table">
       <thead>
         <tr>
           <th colSpan="2">
@@ -35,13 +35,13 @@ const Gradebook = ({
         {students.map((s, i) =>
           <tr key={s.id}>
             <td>
-              <button onClick={() => deleteStudent(s.id)} tabIndex="-1">delete</button>
+              <a className="button is-small" onClick={() => deleteStudent(s.id)} tabIndex="-1">delete</a>
             </td>
-            <th className={s.grades[activeTestId] < 65 ? 'failing' : null}>
+            <th className={`name ${s.grades[activeTestId] < 65 ? 'failing' : null}`}>
               <InputCell value={s.name} allowStrings={true} valueChanged={name => editStudent(s.id, name)} tabIndex="-1" />
             </th>
             {tests.map((t, j) =>
-              <td key={t.id} className={activeTestId === t.id ? 'active-test' : null} >
+              <td key={t.id} className={`grade ${activeTestId === t.id ? 'active-test' : null}`} >
                 <InputCell
                   value={s.grades[t.id]}
                   tabIndex={(j * students.length) + i + 1}

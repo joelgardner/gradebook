@@ -11,7 +11,7 @@ class InputCell extends Component {
 
   render() {
     return (
-      <input type="text"
+      <input className="input" type="text"
         tabIndex={this.props.tabIndex}
         value={this.state.value}
         onFocus={e => this.handleFocus(e)}

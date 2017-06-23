@@ -57,6 +57,15 @@ function tests(state = [], action) {
   switch (action.type) {
     case ADD_TEST_COMPLETED:
       return [...state, action.test]
+
+    // we want to recalculate the statistics when:
+    // (a) a student is deleted, OR
+    // (b) the gradebook is fetched (at page-load), OR
+    // (c) when a grade is changed
+    // in the cases of (a) and (b), the action contains the entire gradebook
+    // so that we can do the recalc.  for (c), the action contains the
+    // testId and studentId where the grade was changed,
+    case DELETE_STUDENT_COMPLETED:
     case FETCH_GRADEBOOK_COMPLETED:
       // set state to the fetched tests, and fallthrough to
       // the next case so we set the test statistics

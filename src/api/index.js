@@ -40,7 +40,10 @@ export function deleteStudent(id : int) : Student {
   const students : Array<Student> = getStudents()
   const i = R.findIndex(R.propEq('id', id), students)
   setStudents(R.remove(i, 1, students))
-  return students[i]
+  return {
+    student: students[i],
+    gradebook: fetchGradebook()
+  }
 }
 
 /**
@@ -104,7 +107,7 @@ export function changeGrade(studentId : int, testId : int, grade : int) : Gradeb
   setStudents(students)
   return {
     students,
-    gets: getTests()
+    tests: getTests()
   }
 }
 
