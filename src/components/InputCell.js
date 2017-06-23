@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { didChange, keyIsEnter } from '../util/inputHelpers'
+import { didChange, keyIsEnter, goToNextTabIndex } from '../util/inputHelpers'
 
 class InputCell extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class InputCell extends Component {
         value={this.state.value}
         onFocus={e => this.handleFocus(e)}
         onChange={e => this.validate(e.target.value)}
-        onKeyDown={e => keyIsEnter(e) && e.target.blur()}
+        onKeyDown={e => keyIsEnter(e) && goToNextTabIndex(e)}
         onBlur={e => didChange(e.target.value, this.props.value) && this.props.valueChanged(e.target.value)}>
       </input>
     )
